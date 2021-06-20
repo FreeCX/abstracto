@@ -1,9 +1,9 @@
 use std::fs::File;
 use std::io::{BufWriter, Write};
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 pub type ColorIndex = u8;
-pub type Palette = HashMap<ColorIndex, Color>;
+pub type Palette = BTreeMap<ColorIndex, Color>;
 pub type RenderFunc = dyn Fn(&RenderPoint) -> f32;
 
 #[derive(Default)]
@@ -30,10 +30,11 @@ pub struct RenderPoint {
     pub yc: u32
 }
 
+#[derive(Debug)]
 pub struct Color {
-    r: u8,
-    g: u8,
-    b: u8
+    pub r: u8,
+    pub g: u8,
+    pub b: u8
 }
 
 impl Generator {

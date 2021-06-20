@@ -17,6 +17,6 @@ fn main() {
         .set_xrange(-f32::consts::PI, f32::consts::PI)
         .set_yrange(-f32::consts::PI, f32::consts::PI);
     let result = generator.fill(&render);
-    let palette = extra::generate_palette();
+    let palette = extra::read_palette("./palettes/random.ppm");
     A::generate_ppm("output-2.ppm", &result, &palette);
 }
