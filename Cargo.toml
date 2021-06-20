@@ -1,0 +1,8 @@
+[package]
+name = "abstracto"
+version = "0.1.0"
+edition = "2018"
+authors = ["Alexey Golubev <dr.freecx@gmail.com>"]
+
+[[example]]
+name = "demo"
