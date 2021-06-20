@@ -37,12 +37,8 @@ pub struct Color {
 }
 
 impl Generator {
-    pub fn set_width(mut self, width: u32) -> Self {
+    pub fn set_canvas(mut self, width: u32, height: u32) -> Self {
         self.width = width;
-        self
-    }
-
-    pub fn set_height(mut self, height: u32) -> Self {
         self.height = height;
         self
     }

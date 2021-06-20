@@ -5,4 +5,7 @@ edition = "2018"
 authors = ["Alexey Golubev <dr.freecx@gmail.com>"]
 
 [[example]]
-name = "demo"
+name = "demo1"
+
+[[example]]
+name = "demo2"
