@@ -112,12 +112,12 @@ pub fn generate_ppm(output: &str, render: &RenderResult, palette: &Palette) {
     let default = Color::rgb(0, 0, 0);
 
     // header
-    let _ = write!(f, "P3\n{} {}\n255\n", render.width, render.height);
+    let _ = write!(f, "P6\n{} {}\n255\n", render.width, render.height);
 
     for point in &render.raw {
         // remap to palette
         let index = ((palette.len() - 1) as f32 * (*point)) as ColorIndex;
         let color = palette.get(&index).unwrap_or(&default);
-        let _ = write!(f, "{} {} {}\n", color.r, color.g, color.b);
+        let _ = f.write(&[color.r, color.g, color.b]);
     }
 }
