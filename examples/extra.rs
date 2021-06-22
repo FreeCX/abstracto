@@ -32,6 +32,14 @@ pub fn grayscale_palette() -> A::Palette {
     map
 }
 
+pub fn special_palette() -> A::Palette {
+    let mut map = A::Palette::new();
+    map.insert(0, A::Color::rgb(255, 255, 255));
+    map.insert(1, A::Color::rgb(128, 128, 128));
+    map.insert(2, A::Color::rgb(0, 0, 0));
+    map
+}
+
 pub fn read_palette(file: &str) -> A::Palette {
     let f = BufReader::new(File::open(file).unwrap());
     let mut result = A::Palette::new();

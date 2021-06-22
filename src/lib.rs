@@ -116,7 +116,7 @@ pub fn generate_ppm(output: &str, render: &RenderResult, palette: &Palette) {
 
     for point in &render.raw {
         // remap to palette
-        let index = (palette.len() as f32 * (*point)) as ColorIndex;
+        let index = ((palette.len() - 1) as f32 * (*point)) as ColorIndex;
         let color = palette.get(&index).unwrap_or(&default);
         let _ = write!(f, "{} {} {}\n", color.r, color.g, color.b);
     }
