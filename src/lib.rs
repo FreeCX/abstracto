@@ -102,18 +102,14 @@ impl Generator {
 }
 
 impl Color {
-    pub fn new<T: Into<u8>>(r: T, g: T, b: T) -> Color {
+    pub fn rgb<T: Into<u8>>(r: T, g: T, b: T) -> Color {
         Color { r: r.into(), g: g.into(), b: b.into() }
-    }
-
-    pub fn black() -> Color {
-        Color::new(0, 0, 0)
     }
 }
 
 pub fn generate_ppm(output: &str, render: &RenderResult, palette: &Palette) {
     let mut f = BufWriter::new(File::create(output).unwrap());
-    let default = Color::black();
+    let default = Color::rgb(0, 0, 0);
 
     // header
     let _ = write!(f, "P3\n{} {}\n255\n", render.width, render.height);

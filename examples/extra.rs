@@ -18,7 +18,16 @@ pub fn generate_palette() -> A::Palette {
         let green: u8 = (c % 255) as u8;
         let red = ((i + green as usize) / 2) as u8;
         let blue = (256 - red as u16) as u8;
-        map.insert(i as u8, A::Color::new(red, green, blue));
+        map.insert(i as u8, A::Color::rgb(red, green, blue));
+    }
+    map
+}
+
+pub fn grayscale_palette() -> A::Palette {
+    let mut map = A::Palette::new();
+    for (i, c) in xor_shift(1).take(256).enumerate() {
+        let v = (256 - c % 255) as u8;
+        map.insert(i as u8, A::Color::rgb(v, v, v));
     }
     map
 }
@@ -31,7 +40,7 @@ pub fn read_palette(file: &str) -> A::Palette {
         match line {
             Ok(line) => {
                 let items: Vec<u8> = line.split(" ").map(|x| x.parse().unwrap()).collect();
-                result.insert(index as u8, A::Color::new(items[0], items[1], items[2]));
+                result.insert(index as u8, A::Color::rgb(items[0], items[1], items[2]));
             }
             Err(_) => {},
         }
