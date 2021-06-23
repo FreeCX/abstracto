@@ -3,7 +3,7 @@ use std::f32;
 
 mod extra;
 
-fn render(point: &A::RenderPoint) -> f32 {
+fn render(point: A::RenderPoint) -> f32 {
     if point.xc % 3 == 0 || point.yc % 4 == 0 {
         0.8
     } else {

@@ -3,7 +3,7 @@ use std::f32;
 
 mod extra;
 
-fn render(point: &A::RenderPoint) -> f32 {
+fn render(point: A::RenderPoint) -> f32 {
     let xshift = f32::consts::PI * 0.5;
     let yshift = 0.0;
     let a = 0.5;

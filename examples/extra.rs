@@ -1,7 +1,7 @@
 #![allow(dead_code, unused_variables)]
 extern crate abstracto as A;
 use std::fs::File;
-use std::io::{BufWriter, Write, BufReader, BufRead};
+use std::io::{BufRead, BufReader, BufWriter, Write};
 
 fn xor_shift(mut init: u32) -> impl Iterator<Item = u32> {
     std::iter::repeat_with(move || {
@@ -50,7 +50,7 @@ pub fn read_palette(file: &str) -> A::Palette {
                 let items: Vec<u8> = line.split(" ").map(|x| x.parse().unwrap()).collect();
                 result.insert(index as u8, A::Color::rgb(items[0], items[1], items[2]));
             }
-            Err(_) => {},
+            Err(_) => {}
         }
     }
 

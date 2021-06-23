@@ -1,10 +1,11 @@
+use std::cmp::Ordering;
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{BufWriter, Write};
-use std::collections::BTreeMap;
 
 pub type ColorIndex = u8;
 pub type Palette = BTreeMap<ColorIndex, Color>;
-pub type RenderFunc = dyn Fn(&RenderPoint) -> f32;
+pub type RenderFunc = dyn Fn(RenderPoint) -> f32;
 
 #[derive(Default)]
 pub struct Generator {
@@ -13,7 +14,7 @@ pub struct Generator {
     y_left: f32,
     y_right: f32,
     width: u32,
-    height: u32
+    height: u32,
 }
 
 pub struct RenderResult {
@@ -27,14 +28,14 @@ pub struct RenderPoint {
     pub xv: f32,
     pub yv: f32,
     pub xc: u32,
-    pub yc: u32
+    pub yc: u32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Color {
     pub r: u8,
     pub g: u8,
-    pub b: u8
+    pub b: u8,
 }
 
 impl Generator {
@@ -45,57 +46,73 @@ impl Generator {
     }
 
     pub fn set_xrange(mut self, left: f32, right: f32) -> Self {
-        assert!(left <= right, "The left ({}) border should be less or equal than the right ({})!", left, right);
+        assert!(
+            left <= right,
+            "The left ({}) border should be less or equal than the right ({})!",
+            left,
+            right
+        );
         self.x_left = left;
         self.x_right = right;
         self
     }
 
     pub fn set_yrange(mut self, left: f32, right: f32) -> Self {
-        assert!(left <= right, "The left ({}) border should be less or equal than the right ({})!", left, right);
+        assert!(
+            left <= right,
+            "The left ({}) border should be less or equal than the right ({})!",
+            left,
+            right
+        );
         self.y_left = left;
         self.y_right = right;
         self
     }
 
     pub fn fill(&self, func: &RenderFunc) -> RenderResult {
-        let mut result = RenderResult { raw: Vec::new(), width: self.width, height: self.height };
-        let mut minv: Option<f32> = None;
-        let mut maxv: Option<f32> = None;
-        let mut raw = Vec::new();
+        let mut result = RenderResult {
+            raw: Vec::new(),
+            width: self.width,
+            height: self.height,
+        };
 
         let x_step = (self.x_right - self.x_left) / self.width as f32;
         let y_step = (self.y_right - self.y_left) / self.height as f32;
+        let iterations = self.width * self.height;
 
-        // generate raw values
-        for iy in 0..self.height {
-            for ix in 0..self.width {
-                let point = RenderPoint {
+        result.raw = (0..iterations)
+            .map(|index| {
+                let ix = index % self.width;
+                let iy = index / self.width;
+                func(RenderPoint {
                     xv: self.x_left as f32 + ix as f32 * x_step,
                     yv: self.y_left as f32 + iy as f32 * y_step,
                     xc: ix,
-                    yc: iy
-                };
-                let p = func(&point);
-                raw.push(p);
+                    yc: iy,
+                })
+            })
+            .collect();
 
-                // find minmax
-                match minv {
-                    Some(x) => minv = Some(x.min(p)),
-                    None => minv = Some(p),
-                }
-                match maxv {
-                    Some(x) => maxv = Some(x.max(p)),
-                    None => maxv = Some(p)
-                }
-            }
+        // no data - no remap
+        if result.raw.len() == 0 {
+            return result;
         }
 
         // remap values to [0, 1]
-        let minv = minv.unwrap().abs();
-        let maxv = maxv.unwrap().abs();
+        let minv = result
+            .raw
+            .iter()
+            .min_by(|&x, &y| x.partial_cmp(y).unwrap_or(Ordering::Equal))
+            .unwrap()
+            .abs();
+        let maxv = result
+            .raw
+            .iter()
+            .max_by(|&x, &y| x.partial_cmp(y).unwrap_or(Ordering::Equal))
+            .unwrap()
+            .abs();
         let range = minv + maxv;
-        result.raw = raw.iter().map(|x| (x + minv) / range).collect();
+        result.raw = result.raw.iter().map(|x| (x + minv) / range).collect();
 
         result
     }
@@ -103,7 +120,11 @@ impl Generator {
 
 impl Color {
     pub fn rgb<T: Into<u8>>(r: T, g: T, b: T) -> Color {
-        Color { r: r.into(), g: g.into(), b: b.into() }
+        Color {
+            r: r.into(),
+            g: g.into(),
+            b: b.into(),
+        }
     }
 }
 

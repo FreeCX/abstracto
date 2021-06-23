@@ -3,8 +3,8 @@ use std::f32;
 
 mod extra;
 
-fn render(point: &A::RenderPoint) -> f32 {
-    let aspect = ((point.xc + 1) as f32).ln() / ((point.yc + 1) as f32).ln();
+fn render(point: A::RenderPoint) -> f32 {
+    let aspect = ((point.xc + 2) as f32).ln() / ((point.yc + 2) as f32).ln();
     aspect * point.yv.ln() * point.xv.cos() + point.xv.ln() * point.yv.sin()
 }
 
