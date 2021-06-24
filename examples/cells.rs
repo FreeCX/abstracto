@@ -17,5 +17,5 @@ fn main() {
         .set_xrange(-2.0, 2.0);
     let result = generator.fill(&render);
     let palette = extra::grayscale_palette();
-    A::generate_ppm("output-4.ppm", &result, &palette);
+    A::generate_ppm("cells.ppm", &result, &palette);
 }

@@ -15,5 +15,5 @@ fn main() {
         .set_yrange(1.0, 2.0);
     let result = generator.fill(&render);
     let palette = extra::read_palette("./palettes/random.ppm");
-    A::generate_ppm("output-3.ppm", &result, &palette);
+    A::generate_ppm("distortion.ppm", &result, &palette);
 }

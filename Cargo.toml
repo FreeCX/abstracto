@@ -5,16 +5,19 @@ edition = "2018"
 authors = ["Alexey Golubev <dr.freecx@gmail.com>"]
 
 [[example]]
-name = "demo1"
+name = "cos_sin"
 
 [[example]]
-name = "demo2"
+name = "pastel"
 
 [[example]]
-name = "demo3"
+name = "distortion"
 
 [[example]]
-name = "demo4"
+name = "cells"
 
 [[example]]
-name = "demo5"
+name = "grid_pattern"
+
+[[example]]
+name = "mandelbrot_set"

@@ -19,5 +19,5 @@ fn main() {
         .set_xrange(0.0, 1.0);
     let result = generator.fill(&render);
     let palette = extra::special_palette();
-    A::generate_ppm("output-5.ppm", &result, &palette);
+    A::generate_ppm("grid_pattern.ppm", &result, &palette);
 }

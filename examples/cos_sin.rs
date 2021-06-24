@@ -19,5 +19,5 @@ fn main() {
     let result = generator.fill(&render);
     let palette = extra::generate_palette();
     // extra.write_paletter("./palettes/random.ppm");
-    A::generate_ppm("output-1.ppm", &result, &palette);
+    A::generate_ppm("cos_sin.ppm", &result, &palette);
 }

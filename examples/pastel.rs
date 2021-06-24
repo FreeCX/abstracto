@@ -20,5 +20,5 @@ fn main() {
         .set_yrange(-f32::consts::PI, f32::consts::PI);
     let result = generator.fill(&render);
     let palette = extra::read_palette("./palettes/pastels.ppm");
-    A::generate_ppm("output-2.ppm", &result, &palette);
+    A::generate_ppm("pastel.ppm", &result, &palette);
 }
