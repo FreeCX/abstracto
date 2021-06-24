@@ -40,6 +40,18 @@ pub fn special_palette() -> A::Palette {
     map
 }
 
+pub fn linear_gradient_palette(c1: A::Color, c2: A::Color, n: u8) -> A::Palette {
+    let mut map = A::Palette::new();
+    for i in 1..n {
+        let t = i as f32 / (n - 1) as f32;
+        let r = ((1.0 - t) * c1.r as f32 + t * c2.r as f32) as u8;
+        let g = ((1.0 - t) * c1.g as f32 + t * c2.g as f32) as u8;
+        let b = ((1.0 - t) * c1.b as f32 + t * c2.b as f32) as u8;
+        map.insert(i - 1, A::Color::rgb(r, g, b));
+    }
+    map
+}
+
 pub fn read_palette(file: &str) -> A::Palette {
     let f = BufReader::new(File::open(file).unwrap());
     let mut result = A::Palette::new();

@@ -32,6 +32,8 @@ fn main() {
         .set_xrange(X_MIN, X_MAX)
         .set_yrange(Y_MIN, Y_MAX);
     let result = generator.fill(&render);
-    let palette = extra::read_palette("./palettes/random.ppm");
+    let black = A::Color::rgb(0, 0, 0);
+    let white = A::Color::rgb(255, 255, 255);
+    let palette = extra::linear_gradient_palette(black, white, 255);
     A::generate_ppm("mandelbrot_set.ppm", &result, &palette);
 }
