@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{BufWriter, Write};
 
-pub type ColorIndex = u8;
+pub type ColorIndex = u16;
 pub type Palette = BTreeMap<ColorIndex, Color>;
 pub type RenderFunc = dyn Fn(RenderPoint) -> f32;
 

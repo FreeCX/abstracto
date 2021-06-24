@@ -18,6 +18,7 @@ fn main() {
         .set_yrange(-f32::consts::PI, f32::consts::PI);
     let result = generator.fill(&render);
     let palette = extra::generate_palette();
-    // extra.write_paletter("./palettes/random.ppm");
+    // write generated palette to file (if you need it)
+    // extra::write_paletter("./palettes/random.ppm", palette);
     A::generate_ppm("cos_sin.ppm", &result, &palette);
 }
