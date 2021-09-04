@@ -21,3 +21,6 @@ name = "grid_pattern"
 
 [[example]]
 name = "mandelbrot_set"
+
+[[example]]
+name = "squircle"
